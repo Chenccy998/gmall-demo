@@ -12,7 +12,7 @@
     <artifactId>gmall-api</artifactId>
 
     <dependencies>
-        <!--吧mybatisplus的包引入防止报错-->
+        <!--把mybatisplus的包引入防止报错-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -58,5 +58,10 @@
             <version>2.0.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.56</version>
+        </dependency>
     </dependencies>
 </project>
