@@ -1,6 +1,7 @@
 package com.atguigu.gmall.ums.service;
 
 import com.atguigu.gmall.ums.entity.Admin;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,5 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AdminService extends IService<Admin> {
 
-    Admin login(String username, String password);
+    Admin getUserInfo(String username);
+
+    Admin loginByUsernameAndPassword(String username, String password);
+
 }

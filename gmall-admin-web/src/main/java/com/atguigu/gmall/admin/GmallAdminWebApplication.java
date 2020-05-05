@@ -1,5 +1,6 @@
 package com.atguigu.gmall.admin;
 
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *        引入的时候排除这个场景的依赖
  *        排除掉这个场景的自动配置类
  */
+@EnableDubbo
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class GmallAdminWebApplication {
 

@@ -1,6 +1,5 @@
 package com.atguigu.gmall.admin.ums.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.atguigu.gmall.admin.ums.vo.UmsAdminLoginParam;
 import com.atguigu.gmall.admin.ums.vo.UmsAdminParam;
 import com.atguigu.gmall.admin.utils.JwtTokenUtil;
@@ -9,6 +8,7 @@ import com.atguigu.gmall.ums.service.AdminService;
 import com.atguigu.gmall.to.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * 后台用户管理
  */
+@CrossOrigin//解决跨域问题
 @RestController
 @Api(tags = "AdminController", description = "后台用户管理")
 @RequestMapping("/admin")
@@ -57,7 +58,7 @@ public class UmsAdminController {
     @PostMapping(value = "/login")
     public Object login(@RequestBody UmsAdminLoginParam umsAdminLoginParam, BindingResult result) {
         //去数据库登陆
-        Admin admin = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        Admin admin = adminService.loginByUsernameAndPassword(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
         //登陆成功生成token，此token携带基本用户信息，以后就不用去数据库了
         String token = jwtTokenUtil.generateToken(admin);
         if (token == null) {
@@ -98,10 +99,9 @@ public class UmsAdminController {
     @ResponseBody
     public Object getAdminInfo(HttpServletRequest request) {
         String oldToken = request.getHeader(tokenHeader);
-        String userName = jwtTokenUtil.getUserNameFromToken(oldToken);
+        String userName = jwtTokenUtil.getUserNameFromToken(oldToken.substring(tokenHead.length()));
 
-        //Admin umsAdmin = adminService.getOne(new QueryWrapper<Admin>().eq("username",userName));
-        Admin umsAdmin =null;
+        Admin umsAdmin = adminService.getUserInfo(userName);
         Map<String, Object> data = new HashMap<>();
         data.put("username", umsAdmin.getUsername());
         data.put("roles", new String[]{"TEST"});
